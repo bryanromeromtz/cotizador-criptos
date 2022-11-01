@@ -1,5 +1,7 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import toast, { Toaster } from "react-hot-toast";
+
 import useSelectMonedas from "../hooks/useSelectMonedas";
 
 import { monedas } from "../data/monedas";
@@ -30,15 +32,66 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
-export const Formulario = () => {
-  const [state, SelectMonedas] = useSelectMonedas("Elige tu moneda", monedas);
+export const Formulario = ({ setMoneda, setCriptomoneda }) => {
+  const [criptomonedas, setCriptomonedas] = useState([]);
+  const [alerta, setAlerta] = useState("");
+
+  useEffect(() => {
+    const consultarAPI = async () => {
+      const url =
+        "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=20&tsym=USD";
+      const respuesta = await fetch(url);
+      const resultado = await respuesta.json();
+      const arrayCriptos = resultado.Data.map((moneda) => ({
+        codigo: moneda.CoinInfo.Name,
+        nombre: moneda.CoinInfo.FullName,
+      }));
+      setCriptomonedas(arrayCriptos);
+    };
+    consultarAPI();
+  }, []);
+
+  const [stateMoneda, SelectMonedas] = useSelectMonedas(
+    "Elige tu moneda",
+    monedas
+  );
+  const [stateCripto, SelectCripto] = useSelectMonedas(
+    "Elige tu criptomoneda",
+    criptomonedas
+  );
+
+  const cotizarMoneda = (e) => {
+    e.preventDefault();
+
+    if (stateMoneda === "" || stateCripto === "") {
+      toast("Todos los campos son obligatorios", {
+        icon: "🚨",
+        position: "top-center",
+        ariaProps: {
+          role: "alert",
+          "aria-live": "assertive",
+        },
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+    setMoneda(stateMoneda);
+    setCriptomoneda(stateCripto);
+    setAlerta("");
+  };
+
   return (
     <Form>
       <div>
         <SelectMonedas />
+        <SelectCripto />
       </div>
-      {state}
-      <InputSubmit type="submit" value="Calcular" />
+      <Toaster />
+      <InputSubmit type="submit" value="Calcular" onClick={cotizarMoneda} />
     </Form>
   );
 };

@@ -11,8 +11,11 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "radium": "^0.26.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.0",
+    "react-spinners": "^0.13.6"
   },
   "devDependencies": {
     "@types/react": "^18.0.22",
