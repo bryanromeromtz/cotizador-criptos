@@ -34,12 +34,11 @@ const Form = styled.form`
 
 export const Formulario = ({ setMoneda, setCriptomoneda }) => {
   const [criptomonedas, setCriptomonedas] = useState([]);
-  const [alerta, setAlerta] = useState("");
 
   useEffect(() => {
     const consultarAPI = async () => {
       const url =
-        "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=20&tsym=USD";
+        "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=30&tsym=USD";
       const respuesta = await fetch(url);
       const resultado = await respuesta.json();
       const arrayCriptos = resultado.Data.map((moneda) => ({

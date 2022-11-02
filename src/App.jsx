@@ -27,6 +27,7 @@ const Contenedor = styled.div`
   max-width: 900px;
   margin: 0 auto;
   width: 95%;
+  margin-bottom: 300px;
   @media (min-width: 992px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -73,6 +74,7 @@ function App() {
   useEffect(() => {
     if (moneda !== "" && criptomoneda !== "") {
       const consultarAPI = async () => {
+        setResultado({});
         const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
         const respuesta = await fetch(url);
         const resultado = await respuesta.json();

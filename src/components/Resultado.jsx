@@ -49,39 +49,53 @@ const Img = styled.img`
   display: block;
 `;
 
+const ContenedorSpinner = styled.div`
+  position: relative;
+  top: 100px;
+  left: 50%;
+  width: 100%;
+  @media (max-width: 480px) {
+    position: relative;
+    top: 230px;
+    left: -25px;
+  }
+`;
+
 export const Resultado = ({ resultado, loading }) => {
   const { PRICE, HIGHDAY, LOWDAY, CHANGEPCT24HOUR, LASTUPDATE, IMAGEURL } =
     resultado;
 
   return (
-    <ResultadoDiv>
+    <>
       {loading && (
-        <PacmanLoader
-          color={"#fbaf57"}
-          size={30}
-          cssOverride={{
-            position: "absolute",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        />
+        <ContenedorSpinner>
+          <PacmanLoader
+            color={"#fbaf57"}
+            size={30}
+            cssOverride={{ position: "absolute", top: "60%", left: "50%" }}
+          />
+        </ContenedorSpinner>
       )}
-      <Img src={`https://www.cryptocompare.com${IMAGEURL}`} alt="imagen" />
-      <Precio>
-        El precio es: <span>{PRICE}</span>
-      </Precio>
-      <Info>
-        Precio más alto del día: <span>{HIGHDAY}</span>
-      </Info>
-      <Info>
-        Precio más bajo del día: <span>{LOWDAY}</span>
-      </Info>
-      <Info>
-        Variación últimas 24 horas: <span>{CHANGEPCT24HOUR}</span>
-      </Info>
-      <Info>
-        Última actualización: <span>{LASTUPDATE}</span>
-      </Info>
-    </ResultadoDiv>
+      {PRICE && (
+        <ResultadoDiv>
+          <Img src={`https://www.cryptocompare.com${IMAGEURL}`} alt="imagen" />
+          <Precio>
+            El precio es: <span>{PRICE}</span>
+          </Precio>
+          <Info>
+            Precio más alto del día: <span>{HIGHDAY}</span>
+          </Info>
+          <Info>
+            Precio más bajo del día: <span>{LOWDAY}</span>
+          </Info>
+          <Info>
+            Variación últimas 24 horas: <span>{CHANGEPCT24HOUR}</span>
+          </Info>
+          <Info>
+            Última actualización: <span>{LASTUPDATE}</span>
+          </Info>
+        </ResultadoDiv>
+      )}
+    </>
   );
 };
