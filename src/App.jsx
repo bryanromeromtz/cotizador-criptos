@@ -23,6 +23,8 @@ const Heading = styled.h1`
   }
 `;
 
+// export default App;
+
 const Contenedor = styled.div`
   max-width: 900px;
   margin: 0 auto;
