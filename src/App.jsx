@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import styled from "@emotion/styled";
 import ImagenCripto from "./img/imagen-criptos.png";
-import LogoImg from "./img/crip.png";
+import LogoImg from "./img/toad.png";
 
 import { Formulario } from "./components/Formulario";
 import { Resultado } from "./components/Resultado";
